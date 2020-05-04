@@ -1,0 +1,28 @@
+
+// <NAME> template test.
+
+#include "<NAME>.h"
+/* USER CODE BEGIN Includes */
+
+/* USER CODE END Includes */
+
+extern uint_32 g_<NAME>;
+
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+
+void main(void)
+{
+    /* USER CODE BEGIN WHILE */
+    while (1)
+    {
+         /* USER CODE END WHILE */
+         g_<NAME>++; // increment g_<NAME>.
+         sleep(1);
+         /* USER CODE BEGIN 3 */
+    }
+    /* USER CODE END 3 */
+}
+
