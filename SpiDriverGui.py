@@ -21,6 +21,8 @@ class SpiDriverGui:
     """
     Setup main GUI window.
     Main windows is a grid/table of widgets.
+    Data variable is attached to each tkinter widget e.g., self.ser_num.var.set('blah')
+    on_refresh_gui() will typically update each field.
     """
     def __init__(self):
         self.spi_driver = None  # none yet.
@@ -28,18 +30,20 @@ class SpiDriverGui:
         self.grid.configure(padx=8, pady=8)  # add padding around grid.
         self.grid.title(os.path.basename(__file__))  # Display filename in title bar.
 
+        #region Compose GUI widgets.
+
         row = 0  # row counter, used to add widgets to grid.
 
         tkinter.Label(self.grid, text='Port').grid(row=row, column=0)
-        values = [port.device for port in serial.tools.list_ports.comports()]
-        self.port_combo = tkinter.ttk.Combobox(self.grid, values=values, width=10)
+        comports = [port.device for port in serial.tools.list_ports.comports()]
+        self.port_combo = tkinter.ttk.Combobox(self.grid, values=comports, width=10)
         self.port_combo.grid(row=row, column=1)
         self.port_prev = None
-        if len(values) > 0:
-            self.port_combo.current(len(values)-1)
+        if len(comports) > 0:
+            self.port_combo.current(len(comports)-1)  # Select last entry.
         row += 1
 
-        def create_display_parameter(str_name, row) -> tkinter.StringVar:
+        def create_display_parameter(str_name, row) -> tkinter.Entry:
             tkinter.Label(self.grid, text=str_name).grid(row=row, column=0)
             string_var = tkinter.StringVar()
             field = tkinter.Entry(self.grid, textvariable=string_var, state="readonly", width=12)
@@ -55,14 +59,17 @@ class SpiDriverGui:
         self.miso = create_display_parameter('MISO', row); row += 1
         self.mosi = create_display_parameter('MOSI', row); row += 1
 
+        # Add three checkboxes to the same row in the table.
+        # nCS is inverted (active low)
         chk_frame = tkinter.Frame(self.grid)
         v = tkinter.IntVar(); self.chk_ncs = tkinter.Checkbutton(chk_frame, text="nCS", variable=v, command=self.on_chk_ncs ); self.chk_ncs.pack(side=tkinter.LEFT); self.chk_ncs.var = v
         v = tkinter.IntVar(); self.chk_a = tkinter.Checkbutton(chk_frame, text="A", variable=v, command=self.on_chk_a ); self.chk_a.pack(side=tkinter.LEFT); self.chk_a.var = v
         v = tkinter.IntVar(); self.chk_b = tkinter.Checkbutton(chk_frame, text="B", variable=v, command=self.on_chk_b ); self.chk_b.pack(side=tkinter.LEFT); self.chk_b.var = v
-        chk_frame.grid(row=row, column=0, columnspan=2); row += 1
+        chk_frame.grid(row=row, column=0, columnspan=2);
+        row += 1
+
 
         tkinter.Label(self.grid, text='Send bytes').grid(row=row, column=0)
-
         v = tkinter.StringVar()
         self.send_bytes = tkinter.Entry(self.grid, textvariable=v, width=12)
         self.send_bytes.grid(row=row, column=1)
@@ -71,8 +78,13 @@ class SpiDriverGui:
         row += 1
 
         self.btn_send = tkinter.Button(self.grid, text='Transfer', command = self.on_transfer); self.btn_send.grid(row=row, column=1)
-        self.grid.after(500, self.on_refresh_gui)
+
+        #endregion Compose GUI widgets.
+
+        self.grid.after(500, self.on_refresh_gui)  # Establish a refresh routine.
         self.grid.mainloop()
+
+    #region Event handlers (typically start with 'on_').
 
     def on_chk_a(self):
         self.spi_driver.seta(self.chk_a.var.get())
@@ -137,6 +149,9 @@ class SpiDriverGui:
 
         rx = self.spi_driver.writeread(tx)
         self.miso.var.set(binascii.hexlify(rx))
+
+    #endregion Event handlers
+
 
 
 if __name__ == '__main__':
