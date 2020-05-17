@@ -2,13 +2,14 @@
 SPI driver app.
 Jim Fred 2020-05-16
 Similar to the SPI driver GUI.
+See https://github.com/jamesbowman/spidriver
 This GUI uses tkinter because it's included with Python.
 Single-threaded app using tkinter.after() to update display.
 """
 
-from spidriver import SPIDriver  # pip install spidriver
+from spidriver import SPIDriver  # pip install spidriver.
 import serial.tools.list_ports  # pip install serial
-import tkinter  # for GUI
+import tkinter  # for simple GUI. Python example GUIs provided with spidriver were difficult to get working on Windows.
 import tkinter.ttk
 import datetime  # for formatting of uptime.
 import binascii  # for hexlify.
