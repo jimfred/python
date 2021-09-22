@@ -2,7 +2,7 @@
 #include "WinCppDll.h"
 #include "stdlib.h"
 
-extern "C" int __declspec(dllexport) add(int a, int b)
+int __declspec(dllexport) add(int a, int b)
 {
 	return a + b;
 }

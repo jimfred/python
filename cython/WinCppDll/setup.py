@@ -3,7 +3,8 @@ from distutils.extension import Extension
 from Cython.Build import cythonize
 
 extensions = [
-    Extension("WinCppDll", ["WinCppDll.pyx"], libraries=["WinCppDll"])
+    Extension("WinCppDll", ["WinCppDllwrapper.pyx"], libraries=["WinCppDll"],
+              language="c++")
 ]
 setup(
     name="WinCppDll",
