@@ -4,3 +4,5 @@
 /vsDll.vcxproj.filters
 /vsDll.vcxproj.user
 /.vs
+/WinCppDllwrapper.cpp
+/WinCppDll.cp39-win_amd64.pyd
