@@ -12,6 +12,15 @@ cdef extern from "WinCppDll.h":
     void set_integer_arr_ptr(int*)
     void set_integer_arr_ref_ptr(int*&, int&)
 
+    cdef struct TestStruct:
+        int i
+        float f
+        char * str
+
+    #ctypedef s_TestStruct TestStruct
+
+    void get_data_array(TestStruct ** p_data_array, int * p_countof);
+
 
 def add2(int a, int b):
     return add(a, b)
@@ -77,23 +86,9 @@ cpdef pass_by_ref_ptr_arr():
     return a
 
 
-'''
-cpdef pass_by_ptr_1():
-    cdef np.ndarray[int, ndim=1, mode='c'] x
-
-    x = np.zeros((1,), dtype=np.int32)
-    set_integer_ptr(&x[0])
-    return x[0]
-
-
-cpdef struct TestStruct:
-    int i
-    float f
-    char * str
-
-cpdef void get_data(TestStruct ** p_data_array, int * p_countof)
-
-
- def get_data2(r_data, countof):
-	get_data(r_data, countof)
-'''
+cpdef get_data_array2():
+    cdef:
+        TestStruct* a
+        int size
+    get_data_array(&a, &size)
+    return [a[i] for i in range(size)]

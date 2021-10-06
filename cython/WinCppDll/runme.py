@@ -22,8 +22,6 @@ print(f'pass_by_ptr_arr_gets_1357 {x}')
 x = WinCppDll.pass_by_ref_ptr_arr()
 print(f'pass_by_ref_ptr_arr {x}')
 
-r_data = None
-countof = None
-## WinCppDll.get_data2(r_data, countof)
-
+x = WinCppDll.get_data_array2()
+print(f'get_data_array2 {x}')
 

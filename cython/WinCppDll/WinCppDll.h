@@ -13,6 +13,7 @@ void __declspec(dllexport) set_integer_ptr_ptr(int** x);
 void __declspec(dllexport) set_integer_arr_ptr(int* a);
 void __declspec(dllexport) set_integer_arr_ref_ptr(int*& a, int& size);
 
+// End of simple scaler pointers.Next, do pointers to structures.
 
 typedef struct TestStruct
 {
@@ -21,4 +22,4 @@ typedef struct TestStruct
 	char const * str;
 } TestStruct;
 
-void __declspec(dllexport) get_data(TestStruct** p_data_array, int* p_countof);
+void __declspec(dllexport) get_data_array(TestStruct** p_data_array, int* p_countof);

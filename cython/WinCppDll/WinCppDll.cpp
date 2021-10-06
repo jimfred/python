@@ -57,6 +57,10 @@ void __declspec(dllexport) set_integer_arr_ref_ptr(int*& a, int& size)
 	a[size - 1] = 100;
 }
 
+/*
+*  Done with simple scaler pointers. Next, do pointers to structures.
+*/
+
 TestStruct data[3] =
 {
 	{1, 1.1f, "one"},
@@ -64,7 +68,7 @@ TestStruct data[3] =
 	{3, 3.3f, "three"},
 };
 
-void __declspec(dllexport) get_data(TestStruct ** p_data_array, int * p_countof)
+void __declspec(dllexport) get_data_array(TestStruct ** p_data_array, int * p_countof)
 {
 	*p_data_array = &data[0];
 	*p_countof = _countof(data);
