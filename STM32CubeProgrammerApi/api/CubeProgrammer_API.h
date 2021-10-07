@@ -1,0 +1,1 @@
+/C:/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/api/include/CubeProgrammer_API.h/
